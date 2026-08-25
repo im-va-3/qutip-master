@@ -1,0 +1,123 @@
+[build-system]
+build-backend = 'mesonpy'
+requires = [
+    "meson-python>=0.17",
+    "cython>=3.0.0",
+    "numpy>=2.0",
+    "scipy>=1.13",
+]
+
+[project]
+name = "qutip"
+dynamic = ["version"]
+description = "QuTiP: The Quantum Toolbox in Python"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "BSD-3-Clause"
+keywords = ["quantum", "physics", "dynamics"]
+authors = [
+  {name = "Alexander Pitchford"},
+  {name = "Paul D. Nation"},
+  {name = "Robert J. Johansson"},
+  {name = "Chris Granade"},
+  {name = "Arne Grimsmo"},
+  {name = "Nathan Shammah"},
+  {name = "Shahnawaz Ahmed"},
+  {name = "Neill Lambert"},
+  {name = "Eric Giguère"},
+  {name = "Boxi Li"},
+  {name = "Jake Lishman"},
+  {name = "Simon Cross"},
+  {email = "qutip-admin@googlegroups.com"},
+]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Operating System :: Microsoft :: Windows",
+]
+dependencies = [
+    "numpy>=1.23.2",
+    "scipy>=1.13,!=1.16.0,!=1.17.0",
+    "packaging",
+]
+
+# URLs for your project
+[project.urls]
+Homepage = "https://qutip.org"
+Issues = "https://github.com/qutip/qutip/issues"
+Documentation = "https://qutip.readthedocs.io/en/stable/"
+"Source Code" = "https://github.com/qutip/qutip"
+Funding = "https://github.com/sponsors/qutip"
+
+[project.optional-dependencies]
+graphics = ["matplotlib>=3.6"]
+runtime_compilation = ["cython>=0.29.34", "filelock", "setuptools"]
+semidefinite = ["cvxpy>=1.3", "cvxopt"]
+tests = ["pytest>=7.2", "pytest-rerunfailures"]
+ipython = ["ipython"]
+extras = [
+  "loky",
+  "tqdm",
+  "mpmath",
+]
+mpi = ["mpi4py"]
+full = [
+  "qutip[graphics,runtime_compilation,semidefinite,tests,ipython,extras]",
+]
+
+[tool.meson-python.args]
+# Force activation of the Visual Studio environment on Windows (ignored on other platforms);
+# Otherwise, meson would pick the first C++ compiler on PATH, which is often Strawberry Perl's MinGW g++, but MSVC is expected by qutip.
+# This setting will be used for both wheels and source builds.
+setup = ["--vsenv"]
+
+[tool.cibuildwheel]
+manylinux-x86_64-image = "manylinux_2_28"
+build-frontend = "build"
+
+[tool.towncrier]
+directory = "doc/changes"
+filename = "doc/changelog.rst"
+name = "QuTiP"
+package = "qutip"
+[[tool.towncrier.type]]
+directory = "deprecation"
+name = "Deprecations"
+showcontent = true
+[[tool.towncrier.type]]
+directory = "feature"
+name = "Features"
+showcontent = true
+[[tool.towncrier.type]]
+directory = "bugfix"
+name = "Bug Fixes"
+showcontent = true
+[[tool.towncrier.type]]
+directory = "removal"
+name = "Removals"
+showcontent = true
+[[tool.towncrier.type]]
+directory = "doc"
+name = "Documentation"
+showcontent = true
+[[tool.towncrier.type]]
+directory = "misc"
+name = "Miscellaneous"
+showcontent = true
+
+[tool.coverage.run]
+source = ["qutip"]
+parallel = true
+
+[tool.coverage.paths]
+qutip = [
+    "qutip/",
+    "*/site-packages/qutip/",        # posix installs
+    "*\\site-packages\\qutip\\",     # windows installs
+]
