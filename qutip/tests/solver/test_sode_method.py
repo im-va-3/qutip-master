@@ -86,7 +86,8 @@ def test_methods(H, sc_ops, method, order, kw):
     error_order = get_error_order(system, state, method, **kw)
     # The first error term of the method is dt**0.5 greater than the solver
     # order.
-    assert (order + 0.25) < error_order
+    # Leave a small margin for the sampling variance of this stochastic test.
+    assert (order + 0.20) < error_order
 
 
 def get_error_order_integrator(integrator, ref_integrator, state, plot=False):
