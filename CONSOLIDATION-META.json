@@ -22,13 +22,10 @@
   "schema_version": "1.0",
   "snapshot": {
     "category": "05-quantum-computing-and-quantum-physics",
-    "copied_bytes": 6265510,
-    "copied_files": 427,
+    "copied_bytes": 6931333,
+    "copied_files": 518,
     "date": "2026-08-25",
-    "excluded_directories": [
-      "qutip/core/data",
-      "qutip/tests/core/data"
-    ],
+    "excluded_directories": [],
     "excluded_files": [],
     "folder": "qutip-master",
     "kind": "independent-code-snapshot",
